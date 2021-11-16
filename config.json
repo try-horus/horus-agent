@@ -1,0 +1,4 @@
+{
+  //"endpoint": "http://localhost"
+  "endpoint": "http://147.182.161.252:3002" // Horus Droplet for now
+}

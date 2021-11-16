@@ -1,0 +1,24 @@
+{
+  "name": "horus-capture",
+  "version": "1.0.0",
+  "description": "Autoinstrumentation for metrics and traces, used in the Horus infrastructure.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "traces",
+    "metrics",
+    "telemetry",
+    "horus"
+  ],
+  "author": "Horus Team",
+  "license": "ISC",
+  "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.26.0",
+    "@opentelemetry/exporter-otlp-http": "^0.26.0",
+    "@opentelemetry/metrics": "^0.24.0",
+    "@opentelemetry/sdk-node": "^0.27.0",
+    "response-time": "^2.3.2"
+  }
+}
