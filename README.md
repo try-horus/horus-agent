@@ -1,8 +1,8 @@
 # Purpose
 This npm package allows you to quickly and seamlessly add instrumentation to your app to automatically generate and export metrics and traces. It is used in the Horus infrastructure.
 
-
-# Set Up Generation of Metrics & Traces
+# Set Up
+### Set Up Generation of Metrics & Traces
 
 1. Install the package using `npm`.
 
@@ -47,6 +47,8 @@ app.use(countErrors, endLatency)
 
 You're done!
 
-# Set Up Exporting of Metrics & Traces
+### Set Up Exporting of Metrics & Traces
 
-1. 
+Change the `endpoint` in `config.json` to point to the endpoint of your choice. 
+
+[ insert steps how to find that based on setting up Docker ]
