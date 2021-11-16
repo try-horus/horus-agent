@@ -1,6 +1,6 @@
 {
-  "name": "horus-capture",
-  "version": "1.0.0",
+  "name": "horus-agent",
+  "version": "0.0.1",
   "description": "Autoinstrumentation for metrics and traces, used in the Horus infrastructure.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,11 @@
     "telemetry",
     "horus"
   ],
-  "author": "Horus Team",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/try-horus/horus-agent.git"
+  },
+  "author": "Horus",
   "license": "ISC",
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.26.0",

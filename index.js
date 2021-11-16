@@ -78,4 +78,8 @@ const initializeMetrics = () => {
 
 const { countRequests, countErrors, startLatency, endLatency } = initializeMetrics()
 
+exports.printMsg = function() {
+  console.log("This is a message from RC");
+}
+
 module.exports = { MetricsAgent = initializeMetrics(), TracingAgent: initializeTracing };
