@@ -78,4 +78,4 @@ const initializeMetrics = () => {
 
 const { countRequests, countErrors, startLatency, endLatency } = initializeMetrics()
 
-module.exports = { countRequests, countErrors, startLatency, endLatency, Tracing: initializeTracing };
+module.exports = { MetricsAgent = initializeMetrics(), TracingAgent: initializeTracing };
