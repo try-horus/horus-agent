@@ -2,6 +2,7 @@ const { OTLPTraceExporter } =  require('@opentelemetry/exporter-otlp-http');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
 const { MeterProvider } = require('@opentelemetry/metrics');
 const { OTLPMetricExporter } =  require('@opentelemetry/exporter-otlp-http');
+const { BatchSpanProcessor} = require('@opentelemetry/sdk-trace-base')
 const opentelemetry = require("@opentelemetry/sdk-node");
 const config = require("./config.json")
 let responseTime = require('response-time')
@@ -13,9 +14,17 @@ const initializeTracing = (serviceName) => {
     serviceName,
   };
 
+  const exporter = new OTLPTraceExporter(collectorOptions)
+
   const sdk = new opentelemetry.NodeSDK({
-    traceExporter: new OTLPTraceExporter(collectorOptions),
-    instrumentations: [getNodeAutoInstrumentations()]
+    traceExporter: exporter,
+    instrumentations: [getNodeAutoInstrumentations()],
+    spanProcessor: new BatchSpanProcessor(exporter, {
+      maxQueueSize: 12000,
+      maxExportBatchSize: 10000,
+      scheduledDelayMillis: 10000,
+      exportTimeoutMillis: 30000,
+    })
   });
 
   sdk.start().then(() => console.log("Tracing initialized successfully."))
@@ -29,7 +38,7 @@ const initializeMetrics = () => {
   const meter = new MeterProvider({
     exporter: new OTLPMetricExporter(collectorOptions),
     interval: 10000,
-  }).getMeter('RC-meter');
+  }).getMeter('Horus-meter');
 
   const requestCounter = meter.createCounter("request_count", {
     description: "Count all incoming requests"
@@ -76,10 +85,4 @@ const initializeMetrics = () => {
   return { countRequests, countErrors, startLatency, endLatency }
 }
 
-const { countRequests, countErrors, startLatency, endLatency } = initializeMetrics()
-
-exports.printMsg = function() {
-  console.log("This is a message from RC");
-}
-
-module.exports = { MetricsAgent = initializeMetrics(), TracingAgent: initializeTracing };
+module.exports = { MetricsAgent: initializeMetrics(), TracingAgent: initializeTracing };
