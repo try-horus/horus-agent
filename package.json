@@ -1,6 +1,6 @@
 {
   "name": "horus-agent",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Autoinstrumentation for metrics and traces, used in the Horus infrastructure.",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "@opentelemetry/exporter-otlp-http": "^0.26.0",
     "@opentelemetry/metrics": "^0.24.0",
     "@opentelemetry/sdk-node": "^0.27.0",
+    "opentelemetry-instrumentation-mongoose": "^0.26.0",
     "response-time": "^2.3.2"
   }
 }

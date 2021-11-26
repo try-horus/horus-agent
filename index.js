@@ -3,6 +3,8 @@ const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumenta
 const { MeterProvider } = require('@opentelemetry/metrics');
 const { OTLPMetricExporter } =  require('@opentelemetry/exporter-otlp-http');
 const { BatchSpanProcessor} = require('@opentelemetry/sdk-trace-base')
+const { MongooseInstrumentation } = require('opentelemetry-instrumentation-mongoose');
+
 const opentelemetry = require("@opentelemetry/sdk-node");
 const config = require("./config.json")
 let responseTime = require('response-time')
@@ -10,7 +12,7 @@ responseTime = responseTime()
 
 const initializeTracing = (serviceName) => {
   const collectorOptions = {
-    url: `${config.endpoint}/v1/traces`,
+    url: `${config.endpoint}:3002/v1/traces`,
     serviceName,
   };
 
@@ -18,7 +20,7 @@ const initializeTracing = (serviceName) => {
 
   const sdk = new opentelemetry.NodeSDK({
     traceExporter: exporter,
-    instrumentations: [getNodeAutoInstrumentations()],
+    instrumentations: [getNodeAutoInstrumentations(), new MongooseInstrumentation()],
     spanProcessor: new BatchSpanProcessor(exporter, {
       maxQueueSize: 12000,
       maxExportBatchSize: 10000,
@@ -32,7 +34,7 @@ const initializeTracing = (serviceName) => {
 
 const initializeMetrics = () => {
   const collectorOptions = {
-     url: `${config.endpoint}/v1/metrics`, 
+     url: `${config.endpoint}:3002/v1/metrics`, 
   };
 
   const meter = new MeterProvider({
