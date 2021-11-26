@@ -1,6 +1,6 @@
 {
   "name": "horus-agent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Autoinstrumentation for metrics and traces, used in the Horus infrastructure.",
   "main": "index.js",
   "scripts": {
