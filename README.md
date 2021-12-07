@@ -28,10 +28,13 @@ TracingAgent("checkout-service")
 4. Beneath the initialization of `express` but above all of your routing, pass `startLatency` and `countRequests` from `MetricsAgent`to the server.
 
 ```js
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-app.use(MetricsAgent.startLatency, MetricsAgent.countRequests)
+app.use(
+  MetricsAgent.startLatency,
+  MetricsAgent.countRequests
+)
 
 // routes...
 ```
@@ -41,8 +44,10 @@ app.use(MetricsAgent.startLatency, MetricsAgent.countRequests)
 ```js
 // routes...
 
-app.use(MetricsAgent.countErrors, MetricsAgent.endLatency)
-
+app.use(
+  MetricsAgent.countErrors,
+  MetricsAgent.endLatency
+)
 ```
 
 6. In every route (or every route that you'd like to monitor), pass in `next` as a parameter and invoke `next()` at the very end.
@@ -51,10 +56,12 @@ app.use(MetricsAgent.countErrors, MetricsAgent.endLatency)
 // example route
 
 app.get('/dashboard', async (req, res, next) => {
-  const movies = await getUrlContents('http://localhost:4000/movies', nodeFetch)
-  res.type('json')
-  res.send(JSON.stringify({ dashboard: movies }))
-  next() // next() is the last line of the route
+  const movies = await getUrlContents('http://localhost:4000/movies', nodeFetch);
+
+  res.type('json');
+  res.send(JSON.stringify({ dashboard: movies }));
+
+  next(); // next() is the last line of the route
 })
 
 ```
@@ -65,17 +72,18 @@ You can throw an error in a route:
 
 ```js
 app.get('/dashboard', async (req, res, next) => {
-  const movies = await axios.get('http://localhost/information')
+  const movies = await axios.get('http://localhost/information');
   
   if (movies.body.length === 0) {
-    return next (new Error('500')) // custom error to be thrown if information is empty
+    return next (new Error('500')); // custom error to be thrown if information is empty
   }
 
-  res.type('json')
-  res.send(JSON.stringify({ dashboard: movies }))
-  next() // next() is the last line of the route
+  res.type('json');
+  res.send(JSON.stringify({ dashboard: movies }));
+
+  next(); // next() is the last line of the route
 })
-````
+```
 
 Or you can use a custom catch all middleware, placed beneath all other route handlers in the file:
 
@@ -86,11 +94,12 @@ app.use(function(req, res, next) {
   if (!req.route) {                     // if the route does not exist (can add to this if/else conditional)
       return next (new Error('404'));   // throw a 404 error
     }  
+
   next();                              // send the req to the next middleware
-});
+})
 
 // app.listen....
-````
+```
 
 You're done!
 
