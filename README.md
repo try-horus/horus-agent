@@ -18,11 +18,14 @@ const { MetricsAgent, TracingAgent} = require("horus-agent")
 
 ```
 
-3. Set up tracing by invoking the `Tracing` function and pass it the name you would like it to be identified by. Most people give it the name of the service/part of the app they are tracing. 
+3. Set up tracing by invoking the `TracingAgent` function and pass it the name you would like it to be identified by. **This should be invoked directly beneath your imported agents and before any other services**. Most people give it the name of the service/part of the app they are tracing. 
 
 ```js
+// imported agents...
+
 TracingAgent("checkout-service")
 
+// all other services...
 ```
 
 4. Beneath the initialization of `express` but above all of your routing, pass `startLatency` and `countRequests` from `MetricsAgent`to the server.
