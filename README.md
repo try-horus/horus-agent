@@ -108,9 +108,9 @@ app.use(function(req, res, next) {
 
 You're done!
 
-#### Traces In Other Services
+#### Traces in Other Services
 
-If you would like to see traces throughout every service of your application, add a TracingAgent to the top of the backend file for each service. Having the MetricsAgent in your root service alone is sufficient for metrics generation and capturing. Do not add a MetricsAgent to other services in the same application.
+If you would like to see detailed spans/traces throughout every service of your application, add a TracingAgent to the top of the backend file for each service. Having the MetricsAgent in your root service alone is sufficient for metrics generation and capturing. Do not add a MetricsAgent to other services in the same application.
 
 At the top of another service:
 ```js
