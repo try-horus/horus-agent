@@ -4,6 +4,8 @@ This npm package allows you to quickly and seamlessly add instrumentation to the
 # Set Up
 ### Set Up Generation of Metrics & Traces
 
+In your **root** service, do the following:
+
 1. Install the package using `npm`.
 
 ```shell
@@ -106,8 +108,19 @@ app.use(function(req, res, next) {
 
 You're done!
 
+#### Traces In Other Services
+
+If you would like to see traces throughout every service of your application, add a TracingAgent to the top of the backend file for each service. Having the MetricsAgent in your root service alone is sufficient for metrics generation and capturing. Do not add a MetricsAgent to other services in the same application.
+
+At the top of another service:
+```js
+const { TracingAgent } = require("horus-agent")
+TracingAgent("inventory-service")
+```
+
+
 ### Set Up Exporting of Metrics & Traces
 
 Change the `endpoint` in `config.json` to point to the host of your choice. 
 
-If you are hosting Horus via Docker on your local machine, you can keep the endpoint at `localhost` (default). Otherwise, if you are hosting Horus via Docker on a VPS (e.g. Digital Ocean or AWS), replace it with the IP address or domain name.
+If you are hosting Horus via Docker on your local machine, you can keep the endpoint at `localhost` (default). Otherwise, if you are hosting Horus via Docker on a VPS (e.g. DigitalOcean or AWS), replace it with the IP address or domain name.
