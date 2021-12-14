@@ -112,7 +112,7 @@ You're done!
 
 If you would like to see detailed spans/traces throughout every service of your application, add a TracingAgent to the top of the backend file for each service. Having the MetricsAgent in your root service alone is sufficient for metrics generation and capturing. Do not add a MetricsAgent to other services in the same application.
 
-At the top of another service:
+At the top of the backend file for another service:
 ```js
 const { TracingAgent } = require("horus-agent")
 TracingAgent("inventory-service")
